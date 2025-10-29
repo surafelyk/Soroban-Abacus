@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Learn the Soroban | QuickBrainy+</title>
+  <link rel="stylesheet" href="index-style.css" />
+  <style>
+    html {
+      scroll-behavior: smooth;
+    }
+
+    /* Fullscreen image popup */
+    .popup-overlay {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0,0,0,0.85);
+      justify-content: center;
+      align-items: center;
+      z-index: 9999;
+    }
+
+    .popup-overlay img {
+      max-width: 90%;
+      max-height: 90%;
+      border-radius: 10px;
+      box-shadow: 0 0 25px rgba(255,255,255,0.4);
+      animation: popIn 0.4s ease;
+    }
+
+    @keyframes popIn {
+      from { transform: scale(0.8); opacity: 0; }
+      to { transform: scale(1); opacity: 1; }
+    }
+
+    .popup-overlay.active {
+      display: flex;
+    }
+  </style>
+</head>
+<body>
+  <header class="site-header">
+    <div class="container header-inner">
+      <a href="#" class="brand-link">
+        <img src="soroban.png" alt="Soroban Logo" class="logo">
+        <span class="brand-text">QuickBrainy+</span>
+      </a>
+      <nav class="main-nav">
+        <ul>
+          <li><a href="index.html" class="active">Home</a></li>
+          <li><a href="learn.html">Learn</a></li>
+          <li><a href="practice.html">Practice</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <section class="hero">
+    <div class="container hero-grid">
+      <div class="hero-content">
+        <h1>Master the Soroban — The Japanese Abacus</h1>
+        <p class="lead">
+          The Soroban is more than a counting tool — it’s a mental calculator that builds focus, speed, and accuracy.
+        </p>
+        <div class="hero-actions">
+          <a href="learn.html" class="btn btn-primary">Start Learning</a>
+          <a href="#" id="view-examples" class="btn btn-outline">View Examples</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <main class="container grid">
+    <section class="panel soroban-panel">
+      <h2>Soroban Diagram</h2>
+      <div class="diagram">
+        <img src="soroban.png" alt="Traditional Japanese Soroban Abacus Diagram" class="soroban-img">
+      </div>
+      <p class="figcaption">
+        The Soroban (算盤) is the Japanese abacus, perfected through centuries. Its wooden frame and beads represent both
+        precision and mindfulness — each movement is deliberate, echoing balance and focus.
+      </p>
+    </section>
+
+    <aside>
+      <div class="card small">
+        <h3>Quick Facts</h3>
+        <ul>
+          <li>Origin: Japan</li>
+          <li>Beads per rod: 5 (1 upper, 4 lower)</li>
+          <li>Used for: Addition, subtraction, multiplication, division</li>
+        </ul>
+      </div>
+
+      <div class="card small">
+        <h3>Common Beginner Mistakes</h3>
+        <ul>
+          <li>Forgetting place values</li>
+          <li>Moving beads from multiple rods at once</li>
+          <li>Not resetting beads after each calculation</li>
+        </ul>
+      </div>
+
+      <section class="panel visual-bead" id="visual-bead">
+        <h2>Visual Bead Example</h2>
+        <div class="diagram">
+          <img src="abacus.jpg" alt="Detailed Japanese Soroban Abacus Diagram" class="abacus-img" id="abacus-img">
+        </div>
+        <p class="figcaption">
+          The Soroban consists of a <strong>value bar</strong> (dividing the upper and lower beads), 
+          <strong>heaven beads</strong> (top), and <strong>earth beads</strong> (bottom).  
+          Each column represents a digit — from ones, tens, hundreds, and so on — moving right to left.  
+          The <strong>reset bar</strong> clears all values when beads are returned to their neutral position.
+        </p>
+        <ul class="bead-parts">
+          <li><strong>Heaven Beads:</strong> Each worth 5 units when moved toward the bar.</li>
+          <li><strong>Earth Beads:</strong> Each worth 1 unit when moved toward the bar.</li>
+          <li><strong>Value Bar:</strong> The center divider representing the calculation threshold.</li>
+          <li><strong>Column Labels:</strong> Indicate place values (ones, tens, hundreds, etc.).</li>
+          <li><strong>Reset Button:</strong> Used to return all beads to zero position.</li>
+        </ul>
+      </section>
+    </aside>
+  </main>
+
+  <section class="container how-it-works">
+    <h2>How the Soroban Works — Deeper Look</h2>
+    <p>
+      Every vertical column represents a place value (ones, tens, hundreds, etc.). The upper bead is worth 5, and each lower bead is worth 1. To calculate, simply slide beads toward the central beam. When you master this, you’ll visualize numbers mentally — that’s the secret to mental math speed!
+    </p>
+    <p>
+      As you practice, you’ll start to “see” the Soroban in your mind. This visualization skill lets you perform large calculations without touching the abacus itself.
+    </p>
+  </section>
+
+  <footer class="site-footer">
+    <div class="container">
+      <p>&copy; 2025 QuickBrainy+. Learn the Soroban for fun and focus.</p>
+    </div>
+  </footer>
+
+  <!-- Fullscreen popup -->
+  <div class="popup-overlay" id="popup">
+    <img src="abacus.jpg" alt="Detailed Japanese Soroban Abacus Diagram">
+  </div>
+
+  <script>
+    // Scroll and open popup on button click
+    document.getElementById("view-examples").addEventListener("click", function(e) {
+      e.preventDefault();
+      const target = document.getElementById("visual-bead");
+      target.scrollIntoView({ behavior: "smooth", block: "center" });
+
+      // small delay before showing popup
+      setTimeout(() => {
+        document.getElementById("popup").classList.add("active");
+      }, 800);
+    });
+
+    // Close popup when clicking outside or pressing ESC
+    const popup = document.getElementById("popup");
+    popup.addEventListener("click", () => popup.classList.remove("active"));
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "Escape") popup.classList.remove("active");
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Practice the Soroban | QuickBrainy+</title>
+  <link rel="stylesheet" href="index-style.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Sawarabi+Mincho&family=Noto+Serif+JP:wght@500;700&display=swap" rel="stylesheet">
+  <style>
+    /* ===== Styling for Beginner and Trainer Areas ===== */
+    .trainer-panel, .panel {
+      background: var(--card-bg, #fff);
+      border: 2px solid var(--accent-light, #d9a05b);
+      border-radius: var(--radius, 10px);
+      box-shadow: 0 6px 12px rgba(0,0,0,0.1);
+      padding: 2rem;
+      margin-top: 2rem;
+    }
+
+    .trainer-display {
+      font-size: clamp(3rem, 7vw, 6rem);
+      font-weight: bold;
+      color: var(--accent, #b35c1e);
+      margin-bottom: 1.5rem;
+      height: 80px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .settings-panel {
+      display: flex;
+      justify-content: center;
+      gap: 1rem;
+      flex-wrap: wrap;
+      background: var(--bg-light, #f8f8f8);
+      padding: 1rem;
+      border-radius: var(--radius, 10px);
+      margin-bottom: 1.5rem;
+      border: 1px solid var(--accent-light, #d9a05b);
+    }
+
+    .settings-panel label {
+      font-weight: 600;
+    }
+
+    .settings-panel input {
+      width: 70px;
+      padding: 4px 8px;
+      border: 1px solid var(--accent-light, #d9a05b);
+      border-radius: 4px;
+      font-size: 1rem;
+    }
+
+    .trainer-controls button, .btn {
+      margin: 0.4rem;
+      padding: 0.6rem 1.2rem;
+      font-size: 1rem;
+      border-radius: var(--radius, 10px);
+      border: none;
+      cursor: pointer;
+      transition: 0.3s;
+      font-weight: 600;
+    }
+
+    .btn-start { background: var(--accent, #b35c1e); color: #fff; }
+    .btn-pause { background: var(--accent-light, #f5c37d); color: #111; }
+    .btn-start:hover { background: #8c3e14; }
+    .btn-pause:hover { background: #e6b56b; }
+
+    #result, #counter {
+      margin-top: 1rem;
+      font-weight: 600;
+    }
+
+    .divider {
+      text-align: center;
+      margin: 3rem 0;
+      font-size: 1.3rem;
+      font-weight: bold;
+      color: var(--accent, #b35c1e);
+      border-top: 2px dashed var(--accent-light, #d9a05b);
+      padding-top: 1rem;
+    }
+
+    /* ===== Column Layout for Beginner Questions ===== */
+    .question-list {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 12px;
+      margin: 1rem auto;
+      max-width: 300px;
+    }
+
+    .question-item {
+      display: flex;
+      justify-content: space-between;
+      width: 100%;
+      background: #fafafa;
+      border: 1px solid #ddd;
+      border-radius: 6px;
+      padding: 8px 12px;
+      font-weight: 600;
+      font-size: 1.1rem;
+    }
+
+    .question-item input {
+      width: 70px;
+      text-align: center;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+      font-size: 1rem;
+    }
+  </style>
+</head>
+
+<body>
+  <!-- ================= HEADER ================= -->
+  <header class="site-header">
+    <div class="container header-inner">
+      <a href="index.html" class="brand-link">
+        <span class="brand-text">QuickBrainy+</span>
+      </a>
+      <nav class="main-nav">
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="learn.html">Learn</a></li>
+          <li><a href="practice.html" class="active">Practice</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <!-- ================= HERO ================= -->
+  <section class="hero">
+    <div class="container hero-grid">
+      <div class="hero-content">
+        <h1>Practice & Train on the Soroban</h1>
+        <p class="lead">Choose your mode — from simple drills to full mental abacus training. Perfect for all levels.</p>
+      </div>
+      <div class="diagram">
+        <img src="abacus.jpg" alt="Soroban" class="soroban-img">
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= MAIN CONTENT ================= -->
+  <main class="container">
+
+    <!-- ====== Beginner Quick Practice ====== -->
+    <article class="panel">
+      <h2>Beginner Practice</h2>
+      <p>Start here if you’re new. Solve quick math questions and check your answers instantly. Use your abacus physically or visualize mentally.</p>
+
+      <div class="settings-panel">
+        <label>Min:</label><input type="number" id="beginMin" value="1" />
+        <label>Max:</label><input type="number" id="beginMax" value="9" />
+        <label>Questions:</label><input type="number" id="beginCount" value="5" />
+      </div>
+
+      <div style="text-align:center;">
+        <div class="op-row" style="margin-top:16px;">
+          <button id="op-add" class="btn">Addition</button>
+          <button id="op-sub" class="btn">Subtraction</button>
+          <button id="op-mul" class="btn">Multiplication</button>
+          <button id="op-div" class="btn">Division</button>
+        </div>
+      </div>
+
+      <div id="questionList" class="question-list"></div>
+
+      <div style="text-align:center; margin-top:1rem;">
+        <button id="btn-check" class="btn-start">Check All</button>
+      </div>
+
+      <div id="q-result" class="result" aria-live="polite" style="text-align:center; margin-top:10px;"></div>
+    </article>
+
+    <div class="divider">— OR —</div>
+
+    <!-- ====== Advanced Trainer ====== -->
+    <article class="trainer-panel">
+      <h2>Advanced Trainer (Custom Settings)</h2>
+      <p class="small">Set your own range, number count, and speed. Numbers will flash quickly — calculate their total mentally using your Soroban skills.</p>
+
+      <div class="settings-panel">
+        <label>Min:</label><input type="number" id="minNum" value="1" />
+        <label>Max:</label><input type="number" id="maxNum" value="9" />
+        <label>Numbers:</label><input type="number" id="countNum" value="10" />
+        <label>Speed (ms):</label><input type="number" id="speed" value="1000" />
+        <label>Mode:</label>
+        <select id="mode">
+          <option value="add">Addition</option>
+          <option value="sub">Subtraction</option>
+          <option value="mix">Mixed (+/-)</option>
+        </select>
+      </div>
+
+      <div id="number" class="trainer-display">Ready?</div>
+
+      <div class="trainer-controls">
+        <button id="startBtn" class="btn-start">Start</button>
+        <button id="pauseBtn" class="btn-pause" disabled>Pause</button>
+      </div>
+
+      <div id="result"></div>
+      <div id="counter">Practices completed: <span id="count">0</span></div>
+    </article>
+
+  </main>
+
+  <!-- ================= FOOTER ================= -->
+  <footer class="site-footer">
+    © 2025 QuickBrainy+. Practice smarter. Visualize faster. Think clearer.
+  </footer>
+
+  <!-- ================= SCRIPT ================= -->
+  <script>
+    /* ===== Beginner Practice (Now in Column Layout with Custom Range) ===== */
+    let op = null;
+    const questionList = document.getElementById('questionList');
+    const qResult = document.getElementById('q-result');
+    const btnCheck = document.getElementById('btn-check');
+    const beginMin = document.getElementById('beginMin');
+    const beginMax = document.getElementById('beginMax');
+    const beginCount = document.getElementById('beginCount');
+
+    function generateQuestions() {
+      questionList.innerHTML = "";
+      const min = parseInt(beginMin.value);
+      const max = parseInt(beginMax.value);
+      const count = parseInt(beginCount.value);
+      if (isNaN(min) || isNaN(max) || min >= max) {
+        alert("Please enter a valid range.");
+        return;
+      }
+      for (let i = 0; i < count; i++) {
+        const a = Math.floor(Math.random() * (max - min + 1)) + min;
+        const b = Math.floor(Math.random() * (max - min + 1)) + min;
+        let question, answer;
+        switch (op) {
+          case "add": question = `${a} + ${b}`; answer = a + b; break;
+          case "sub": question = `${a} - ${b}`; answer = a - b; break;
+          case "mul": question = `${a} × ${b}`; answer = a * b; break;
+          case "div": question = `${a * b} ÷ ${b}`; answer = a; break;
+        }
+        const div = document.createElement("div");
+        div.classList.add("question-item");
+        div.innerHTML = `<span>${question}</span><input type="number" data-answer="${answer}" />`;
+        questionList.appendChild(div);
+      }
+    }
+
+    function checkAllAnswers() {
+      const items = document.querySelectorAll(".question-item input");
+      let correct = 0;
+      items.forEach(input => {
+        if (Number(input.value) === Number(input.dataset.answer)) {
+          input.style.background = "#d4edda";
+          correct++;
+        } else {
+          input.style.background = "#f8d7da";
+        }
+      });
+      qResult.textContent = `You got ${correct} out of ${items.length} correct!`;
+    }
+
+    document.getElementById("op-add").onclick = () => { op = "add"; generateQuestions(); };
+    document.getElementById("op-sub").onclick = () => { op = "sub"; generateQuestions(); };
+    document.getElementById("op-mul").onclick = () => { op = "mul"; generateQuestions(); };
+    document.getElementById("op-div").onclick = () => { op = "div"; generateQuestions(); };
+    btnCheck.onclick = checkAllAnswers;
+
+    /* ===== Advanced Trainer (Unchanged) ===== */
+    const numberDisplay = document.getElementById('number');
+    const resultDiv = document.getElementById('result');
+    const startBtn = document.getElementById('startBtn');
+    const pauseBtn = document.getElementById('pauseBtn');
+    const countSpan = document.getElementById('count');
+    const minNumInput = document.getElementById('minNum');
+    const maxNumInput = document.getElementById('maxNum');
+    const countNumInput = document.getElementById('countNum');
+    const speedInput = document.getElementById('speed');
+    const modeSelect = document.getElementById('mode');
+
+    let numbers = [], totalSum = 0, paused = false, timerId = null, practiceCount = 0;
+
+    function getRandomInt(min, max) {
+      return Math.floor(Math.random() * (max - min + 1)) + min;
+    }
+
+    function startPractice() {
+      const min = parseInt(minNumInput.value, 10);
+      const max = parseInt(maxNumInput.value, 10);
+      const count = parseInt(countNumInput.value, 10);
+      const speed = parseInt(speedInput.value, 10);
+      const mode = modeSelect.value;
+
+      if (isNaN(min) || isNaN(max) || min >= max) {
+        alert("Please set a valid range (e.g., Min 1, Max 9).");
+        return;
+      }
+
+      startBtn.disabled = true;
+      pauseBtn.disabled = false;
+      resultDiv.innerHTML = "";
+      numbers = [];
+      totalSum = 0;
+      paused = false;
+
+      numberDisplay.textContent = "Get ready...";
+      setTimeout(() => showNextNumber(min, max, count, speed, mode), 2000);
+    }
+
+    function showNextNumber(min, max, count, speed, mode) {
+      if (paused) return;
+      if (numbers.length >= count) {
+        numberDisplay.textContent = "Your Answer?";
+        const input = document.createElement("input");
+        input.type = "number";
+        input.placeholder = "Enter total";
+        const btn = document.createElement("button");
+        btn.textContent = "Check";
+        btn.classList.add("btn-start");
+        btn.onclick = () => checkTrainerAnswer(parseInt(input.value, 10));
+        resultDiv.innerHTML = "";
+        resultDiv.appendChild(input);
+        resultDiv.appendChild(btn);
+        startBtn.disabled = false;
+        pauseBtn.disabled = true;
+        return;
+      }
+      let n = getRandomInt(min, max);
+      let sign = 1;
+      if (mode === "sub") sign = -1;
+      else if (mode === "mix") sign = Math.random() > 0.5 ? 1 : -1;
+      const displayNum = sign === 1 ? n : -n;
+      numbers.push(displayNum);
+      totalSum += displayNum;
+      numberDisplay.textContent = displayNum;
+      timerId = setTimeout(() => {
+        numberDisplay.textContent = "";
+        timerId = setTimeout(() => showNextNumber(min, max, count, speed, mode), 400);
+      }, speed);
+    }
+
+    function checkTrainerAnswer(userAnswer) {
+      if (userAnswer === totalSum) {
+        numberDisplay.textContent = "✅ Correct!";
+      } else {
+        numberDisplay.textContent = `❌ Wrong! Correct: ${totalSum}`;
+      }
+      resultDiv.innerHTML = "";
+      practiceCount++;
+      countSpan.textContent = practiceCount;
+    }
+
+    function togglePause() {
+      if (!paused) {
+        paused = true;
+        pauseBtn.textContent = "Resume";
+        clearTimeout(timerId);
+      } else {
+        paused = false;
+        pauseBtn.textContent = "Pause";
+        const min = parseInt(minNumInput.value, 10);
+        const max = parseInt(maxNumInput.value, 10);
+        const count = parseInt(countNumInput.value, 10);
+        const speed = parseInt(speedInput.value, 10);
+        const mode = modeSelect.value;
+        showNextNumber(min, max, count, speed, mode);
+      }
+    }
+
+    startBtn.onclick = startPractice;
+    pauseBtn.onclick = togglePause;
+  </script>
+</body>
+</html>
