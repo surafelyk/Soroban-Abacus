@@ -26,121 +26,29 @@
     <div class="container hero-grid">
       <div class="hero-content">
         <h1>Learn the Japanese Abacus (Soroban)</h1>
-        <p class="lead">Learn simple steps to calculate with speed and clarity.</p>
+        <p class="lead">Follow these simple steps to understand the Soroban system and its use in arithmetic.</p>
       </div>
-      <div class="diagram">
-        <img src="abacus.jpg" alt="Soroban" class="soroban-img">
+      <div class="hero-image">
+        <img src="abacus.jpg" alt="Soroban Abacus" class="soroban-img" />
       </div>
     </div>
   </section>
 
-  <main class="container">
-    <article class="panel">
-      <h2>1. What Is the Soroban?</h2>
-      <p>The Soroban is Japan’s abacus. It has one upper bead (5) and four lower beads (1) per rod. You can perform addition, subtraction, multiplication, and division.</p>
-    </article>
-
-    <article class="panel">
-      <h2>2. Structure</h2>
-      <ul>
-        <li>Top bead (heaven) = 5</li>
-        <li>Bottom beads (earth) = 1 each</li>
-        <li>Middle bar = counting bar</li>
-      </ul>
-      <p>Beads count when touching the bar. Columns represent ones, tens, hundreds from right to left.</p>
-    </article>
-
-    <article class="panel">
-      <h2>3. Reading Numbers</h2>
-      <p>Rightmost column is ones, next is tens, and so on. Example: 1 top bead + 2 bottom beads = 7.</p>
-    </article>
-
-    <article class="panel">
-      <h2>4. Resetting</h2>
-      <p>Push all beads away from the bar before starting each problem. Some Sorobans have a lever to reset.</p>
-    </article>
-
-    <article class="panel">
-      <h2>5. Calculations</h2>
-      <h3>Addition</h3>
-      <p>Slide beads toward the bar. Carry over if total > 9.</p>
-      <h3>Subtraction</h3>
-      <p>Slide beads away from the bar. Borrow from next rod if needed.</p>
-      <h3>Multiplication & Division</h3>
-      <p>Use repeated addition and subtraction. Practice basic operations first.</p>
-    </article>
-
-    <article class="panel">
-      <h2>6. Mental Abacus</h2>
-      <p>Advanced users visualize bead movements in their mind to calculate quickly.</p>
-    </article>
-
-    <article class="panel">
-      <h2>7. Hand Position</h2>
-      <ul>
-        <li>Thumb moves lower beads up</li>
-        <li>Index finger moves lower beads down</li>
-        <li>Upper beads: thumb up, index down</li>
-        <li>Keep shoulders relaxed and eyes steady</li>
-      </ul>
-    </article>
-
-    <article class="panel">
-      <h2>8. Common Mistakes</h2>
-      <ul>
-        <li>Not clearing before calculation</li>
-        <li>Mixing place values</li>
-        <li>Inconsistent finger technique</li>
-        <li>Forgetting top bead = 5</li>
-      </ul>
-    </article>
-
-    <article class="panel">
-      <h2>9. Benefits</h2>
-      <ul>
-        <li>Improves focus</li>
-        <li>Boosts memory</li>
-        <li>Strengthens number sense</li>
-        <li>Builds confidence</li>
-      </ul>
-    </article>
-
-    <article class="panel">
-      <h2>10. Keep Practicing</h2>
-      <p>Practice 10–15 minutes daily. Visualize beads mentally for faster calculations.</p>
-    </article>
+  <main class="container learn-grid">
+    <article class="panel"><h2>1. What Is the Soroban?</h2><p>The Soroban is Japan’s abacus with one upper bead and four lower beads per rod, used for arithmetic.</p></article>
+    <article class="panel"><h2>2. Structure</h2><ul><li>Top bead = 5</li><li>Bottom beads = 1 each</li><li>Middle bar = beam</li></ul></article>
+    <article class="panel"><h2>3. Reading Numbers</h2><p>Rightmost column = ones, next = tens, etc. Example: one top bead + two lower = 7.</p></article>
+    <article class="panel"><h2>4. Resetting</h2><p>Push all beads away before starting new problems.</p></article>
+    <article class="panel"><h2>5. Calculations</h2><p>Add by moving beads toward the beam; subtract by moving away. Carry or borrow as needed.</p></article>
+    <article class="panel"><h2>6. Mental Abacus</h2><p>Advanced users visualize bead movements mentally to calculate instantly.</p></article>
+    <article class="panel"><h2>7. Hand Position</h2><ul><li>Thumb moves lower beads up</li><li>Index moves them down</li><li>Stay relaxed</li></ul></article>
+    <article class="panel"><h2>8. Common Mistakes</h2><ul><li>Not clearing before start</li><li>Wrong place values</li></ul></article>
+    <article class="panel"><h2>9. Benefits</h2><ul><li>Improves focus</li><li>Boosts memory</li><li>Sharpens number sense</li></ul></article>
+    <article class="panel"><h2>10. Keep Practicing</h2><p>Practice daily and visualize beads mentally for speed and clarity.</p></article>
   </main>
 
   <footer class="site-footer">
-    © 2025 QuickBrainy+. Learn the Soroban for sharper thinking.
+    <p>&copy; 2025 QuickBrainy+. Sharpen your mind with the Soroban.</p>
   </footer>
-
-  <div id="imgOverlay" class="img-overlay">
-    <span class="close-btn">&times;</span>
-    <img id="overlayImg" src="" alt="Full view">
-  </div>
-
-  <script>
-    document.querySelectorAll('.soroban-img').forEach(img => {
-      img.addEventListener('click', () => {
-        const overlay = document.getElementById('imgOverlay');
-        const overlayImg = document.getElementById('overlayImg');
-        overlayImg.src = img.src;
-        overlay.classList.add('show');
-      });
-    });
-
-    document.querySelector('.close-btn').addEventListener('click', () => {
-      document.getElementById('imgOverlay').classList.remove('show');
-    });
-
-    document.getElementById('imgOverlay').addEventListener('click', e => {
-      if (e.target.id === 'imgOverlay') e.target.classList.remove('show');
-    });
-
-    document.addEventListener('keydown', e => {
-      if (e.key === 'Escape') document.getElementById('imgOverlay').classList.remove('show');
-    });
-  </script>
 </body>
 </html>
