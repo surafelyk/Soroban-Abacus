@@ -49,13 +49,14 @@
         <img src="soroban.png" alt="Soroban Logo" class="logo">
         <span class="brand-text">QuickBrainy+</span>
       </a>
-      <nav class="main-nav">
+      <nav class="main-nav" id="mainNav">
         <ul>
           <li><a href="index.html" class="active">Home</a></li>
           <li><a href="learn.html">Learn</a></li>
           <li><a href="practice.html">Practice</a></li>
         </ul>
       </nav>
+      <div class="menu-toggle" id="menuToggle">&#9776;</div>
     </div>
   </header>
 
@@ -113,16 +114,8 @@
         <p class="figcaption">
           The Soroban consists of a <strong>value bar</strong> (dividing the upper and lower beads), 
           <strong>heaven beads</strong> (top), and <strong>earth beads</strong> (bottom).  
-          Each column represents a digit — from ones, tens, hundreds, and so on — moving right to left.  
-          The <strong>reset bar</strong> clears all values when beads are returned to their neutral position.
+          Each column represents a digit — from ones, tens, hundreds, and so on — moving right to left.
         </p>
-        <ul class="bead-parts">
-          <li><strong>Heaven Beads:</strong> Each worth 5 units when moved toward the bar.</li>
-          <li><strong>Earth Beads:</strong> Each worth 1 unit when moved toward the bar.</li>
-          <li><strong>Value Bar:</strong> The center divider representing the calculation threshold.</li>
-          <li><strong>Column Labels:</strong> Indicate place values (ones, tens, hundreds, etc.).</li>
-          <li><strong>Reset Button:</strong> Used to return all beads to zero position.</li>
-        </ul>
       </section>
     </aside>
   </main>
@@ -132,9 +125,6 @@
     <p>
       Every vertical column represents a place value (ones, tens, hundreds, etc.). The upper bead is worth 5, and each lower bead is worth 1. To calculate, simply slide beads toward the central beam. When you master this, you’ll visualize numbers mentally — that’s the secret to mental math speed!
     </p>
-    <p>
-      As you practice, you’ll start to “see” the Soroban in your mind. This visualization skill lets you perform large calculations without touching the abacus itself.
-    </p>
   </section>
 
   <footer class="site-footer">
@@ -143,29 +133,33 @@
     </div>
   </footer>
 
-  <!-- Fullscreen popup -->
   <div class="popup-overlay" id="popup">
     <img src="abacus.jpg" alt="Detailed Japanese Soroban Abacus Diagram">
   </div>
 
   <script>
-    // Scroll and open popup on button click
+    // Popup trigger
     document.getElementById("view-examples").addEventListener("click", function(e) {
       e.preventDefault();
       const target = document.getElementById("visual-bead");
       target.scrollIntoView({ behavior: "smooth", block: "center" });
-
-      // small delay before showing popup
       setTimeout(() => {
         document.getElementById("popup").classList.add("active");
       }, 800);
     });
 
-    // Close popup when clicking outside or pressing ESC
+    // Popup close
     const popup = document.getElementById("popup");
     popup.addEventListener("click", () => popup.classList.remove("active"));
     document.addEventListener("keydown", (e) => {
       if (e.key === "Escape") popup.classList.remove("active");
+    });
+
+    // Mobile menu toggle
+    const menuToggle = document.getElementById("menuToggle");
+    const nav = document.getElementById("mainNav");
+    menuToggle.addEventListener("click", () => {
+      nav.classList.toggle("active");
     });
   </script>
 </body>
