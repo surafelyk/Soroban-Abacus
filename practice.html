@@ -83,7 +83,6 @@
       padding-top: 1rem;
     }
 
-    /* ===== Column Layout for Beginner Questions ===== */
     .question-list {
       display: flex;
       flex-direction: column;
@@ -202,7 +201,16 @@
       <div class="trainer-controls">
         <button id="startBtn" class="btn-start">Start</button>
         <button id="pauseBtn" class="btn-pause" disabled>Pause</button>
+
+        <!-- ✅ NEW SPEED PRACTICE BUTTON -->
+        <button id="speedPracticeBtn" class="btn" style="background:#0077b6; color:#fff;">
+          Speed Practice Mode
+        </button>
       </div>
+
+      <p style="margin-top:1rem; text-align:center; font-size:0.95rem; color:#555;">
+        ⚡ Try the <strong>Speed Practice Mode</strong> — opens in a new fullscreen tab for faster abacus reaction training.
+      </p>
 
       <div id="result"></div>
       <div id="counter">Practices completed: <span id="count">0</span></div>
@@ -217,7 +225,7 @@
 
   <!-- ================= SCRIPT ================= -->
   <script>
-    /* ===== Beginner Practice (Now in Column Layout with Custom Range) ===== */
+    /* ===== Beginner Practice ===== */
     let op = null;
     const questionList = document.getElementById('questionList');
     const qResult = document.getElementById('q-result');
@@ -272,7 +280,7 @@
     document.getElementById("op-div").onclick = () => { op = "div"; generateQuestions(); };
     btnCheck.onclick = checkAllAnswers;
 
-    /* ===== Advanced Trainer (Unchanged) ===== */
+    /* ===== Advanced Trainer ===== */
     const numberDisplay = document.getElementById('number');
     const resultDiv = document.getElementById('result');
     const startBtn = document.getElementById('startBtn');
@@ -375,6 +383,16 @@
 
     startBtn.onclick = startPractice;
     pauseBtn.onclick = togglePause;
+
+    // ✅ NEW SPEED PRACTICE SCRIPT
+    document.getElementById('speedPracticeBtn').addEventListener('click', () => {
+      const newWindow = window.open('speed-practice.html', '_blank');
+      if (newWindow) {
+        newWindow.focus();
+      } else {
+        alert('Please allow pop-ups to open Speed Practice Mode.');
+      }
+    });
   </script>
 </body>
 </html>
