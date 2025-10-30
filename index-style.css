@@ -1,16 +1,13 @@
-/* =========================================
-   Base setup — Japanese-inspired redesign
-========================================= */
 @import url('https://fonts.googleapis.com/css2?family=Sawarabi+Mincho&family=Noto+Serif+JP:wght@500;700&display=swap');
 
 :root {
-  --bg-light: #f7f3ea;            /* washi paper tone */
+  --bg-light: #f7f3ea;
   --bg-dark: #1a1410;
-  --text-light: #2d1b0f;          /* ink brown */
+  --text-light: #2d1b0f;
   --text-muted: #6b5c4e;
-  --accent: #b3541e;              /* wood-orange */
-  --accent-light: #e8c28d;        /* golden bamboo */
-  --card-bg: #fffaf3;             /* ivory parchment */
+  --accent: #b3541e;
+  --accent-light: #e8c28d;
+  --card-bg: #fffaf3;
   --radius: 0.75rem;
   --transition: 0.3s ease-in-out;
   --shadow: rgba(0, 0, 0, 0.15);
@@ -32,38 +29,31 @@
   box-sizing: border-box;
 }
 
-html {
-  scroll-behavior: smooth;
-}
-
 body {
   margin: 0;
   font-family: "Sawarabi Mincho", "Noto Serif JP", serif;
-  background: var(--bg-light) url("https://www.transparenttextures.com/patterns/paper-fibers.png");
+  background: var(--bg-light);
   color: var(--text-light);
   line-height: 1.7;
   font-size: 1rem;
 }
 
-/* =========================================
-   Layout Containers
-========================================= */
+/* Containers */
 .container {
   width: min(95%, 1200px);
   margin: 0 auto;
 }
 
-.site-header,
-.site-footer {
+/* Header */
+.site-header {
   background: var(--card-bg);
   border-bottom: 2px solid var(--accent-light);
-  box-shadow: 0 2px 4px var(--shadow);
   padding: 1rem 0;
+  position: sticky;
+  top: 0;
+  z-index: 100;
 }
 
-/* =========================================
-   Header and Brand
-========================================= */
 .header-inner {
   display: flex;
   align-items: center;
@@ -71,35 +61,31 @@ body {
   flex-wrap: wrap;
 }
 
+.logo {
+  width: 40px;
+  height: 40px;
+}
+
 .brand-link {
   display: flex;
   align-items: center;
-  text-decoration: none;
   color: var(--text-light);
+  text-decoration: none;
 }
 
 .brand-text {
-  margin-left: 0.6rem;
+  margin-left: 0.5rem;
   font-weight: 700;
-  font-size: 1.3rem;
-  letter-spacing: 0.5px;
+  font-size: 1.4rem;
 }
 
-.logo {
-  width: 36px;
-  height: 36px;
-  color: var(--accent);
-}
-
-/* =========================================
-   Navigation
-========================================= */
+/* Navigation */
 .main-nav ul {
   list-style: none;
+  display: flex;
+  gap: 2rem;
   margin: 0;
   padding: 0;
-  display: flex;
-  gap: 1.8rem;
 }
 
 .main-nav a {
@@ -107,20 +93,18 @@ body {
   color: var(--text-light);
   font-weight: 600;
   position: relative;
-  font-family: "Noto Serif JP", serif;
-  letter-spacing: 0.5px;
 }
 
 .main-nav a::after {
   content: "";
   position: absolute;
-  left: 0;
   bottom: -3px;
-  width: 100%;
+  left: 0;
   height: 2px;
+  width: 100%;
   background: var(--accent);
   transform: scaleX(0);
-  transition: transform 0.3s ease-in-out;
+  transition: transform 0.3s;
   transform-origin: right;
 }
 
@@ -128,66 +112,56 @@ body {
 .main-nav a.active::after {
   transform: scaleX(1);
   transform-origin: left;
+}
+
+.menu-toggle {
+  display: none;
+  font-size: 1.8rem;
+  cursor: pointer;
   color: var(--accent);
 }
 
-/* =========================================
-   Hero Section
-========================================= */
+/* Hero */
 .hero {
-  background: linear-gradient(135deg, var(--accent-light) 0%, transparent 60%);
+  background: linear-gradient(135deg, var(--accent-light) 0%, transparent 70%);
   padding: 4rem 0 3rem;
-  border-bottom: 2px solid var(--accent-light);
-}
-
-.hero-grid {
-  display: grid;
-  grid-template-columns: 1fr 320px;
-  gap: 2rem;
-  align-items: start;
+  text-align: left;
 }
 
 .hero-content h1 {
   font-size: clamp(1.8rem, 4vw, 2.8rem);
-  line-height: 1.3;
-  color: var(--text-light);
-  text-shadow: 0 1px 0 var(--accent-light);
+  margin: 0;
 }
 
-.hero-content .lead {
+.hero .lead {
+  margin: 1rem 0;
   color: var(--text-muted);
-  margin: 1rem 0 1.5rem;
-  font-size: 1.1rem;
 }
 
 .hero-actions {
   display: flex;
+  flex-wrap: wrap;
   gap: 1rem;
 }
 
-/* =========================================
-   Buttons
-========================================= */
+/* Buttons */
 .btn {
   display: inline-block;
-  padding: 0.7rem 1.3rem;
+  padding: 0.8rem 1.4rem;
   border-radius: var(--radius);
   text-decoration: none;
   font-weight: 700;
-  text-align: center;
-  font-family: "Noto Serif JP", serif;
   transition: var(--transition);
+  text-align: center;
 }
 
 .btn-primary {
   background: var(--accent);
   color: #fff;
-  box-shadow: 0 4px 8px var(--shadow);
 }
 
 .btn-primary:hover {
   background: #8c3e14;
-  transform: translateY(-2px);
 }
 
 .btn-outline {
@@ -200,33 +174,7 @@ body {
   color: #fff;
 }
 
-.btn-small {
-  display: inline-block;
-  margin-top: 0.5rem;
-  font-size: 0.9rem;
-  padding: 0.4rem 0.8rem;
-}
-
-/* =========================================
-   Cards and panels
-========================================= */
-.card {
-  background: var(--card-bg) url("https://www.transparenttextures.com/patterns/bamboo.png");
-  border-radius: var(--radius);
-  border: 1px solid var(--accent-light);
-  box-shadow: 0 6px 10px rgba(0, 0, 0, 0.08);
-  padding: 1rem 1.2rem;
-  margin-bottom: 1.5rem;
-}
-
-.card.small {
-  font-size: 0.9rem;
-  line-height: 1.4;
-}
-
-/* =========================================
-   Main content grid
-========================================= */
+/* Main grid */
 .grid {
   display: grid;
   grid-template-columns: 2fr 1fr;
@@ -234,186 +182,129 @@ body {
   margin: 2rem 0;
 }
 
-@media (max-width: 800px) {
+@media (max-width: 900px) {
   .grid {
-    grid-template-columns: 1fr;
-  }
-  .hero-grid {
     grid-template-columns: 1fr;
   }
 }
 
-/* =========================================
-   Panels, diagrams, examples
-========================================= */
+/* Panels */
 .panel {
   background: var(--card-bg);
   padding: 1.5rem;
-  margin-bottom: 2rem;
   border-radius: var(--radius);
   border-left: 6px solid var(--accent);
   box-shadow: 0 3px 5px var(--shadow);
 }
 
 .panel h2 {
-  margin-top: 0;
   color: var(--accent);
-  font-family: "Sawarabi Mincho", serif;
-  letter-spacing: 0.5px;
+  margin-top: 0;
 }
 
-.diagram {
-  display: flex;
-  justify-content: center;
-  margin: 1rem 0;
-}
-
-.figcaption {
-  font-size: 0.9rem;
-  color: var(--text-muted);
-  text-align: center;
-  margin-top: 0.3rem;
-  font-style: italic;
-}
-
-.friend-grid {
-  display: flex;
-  gap: 0.8rem;
-  flex-wrap: wrap;
-}
-
-.friend-grid li {
-  list-style: none;
-  background: var(--accent-light);
-  padding: 0.4rem 0.8rem;
+.diagram img {
+  max-width: 100%;
+  height: auto;
   border-radius: var(--radius);
-  box-shadow: 0 2px 4px var(--shadow);
+  border: 3px solid var(--accent-light);
 }
 
-.rule-cards {
-  display: grid;
-  gap: 1rem;
-}
-
-.rule {
-  background: var(--bg-light);
-  border-left: 4px solid var(--accent);
-  padding: 0.8rem 1rem;
+/* Cards */
+.card {
+  background: var(--card-bg);
+  border: 1px solid var(--accent-light);
   border-radius: var(--radius);
-  box-shadow: 0 1px 3px var(--shadow);
+  padding: 1rem;
+  margin-bottom: 1rem;
+  box-shadow: 0 4px 8px var(--shadow);
 }
 
-/* =========================================
-   Footer
-========================================= */
+/* Footer */
 .site-footer {
   text-align: center;
   padding: 2rem 0;
   border-top: 2px solid var(--accent-light);
-  color: var(--text-muted);
-  font-size: 0.95rem;
-  background: var(--card-bg) url("https://www.transparenttextures.com/patterns/paper-fibers.png");
-}
-/* =========================================
-   Soroban Diagram Image Styling
-========================================= */
-.soroban-img {
-  max-width: 100%;
-  height: auto;
-  border: 3px solid var(--accent-light);
-  border-radius: var(--radius);
   background: var(--card-bg);
-  box-shadow: 0 8px 16px rgba(0,0,0,0.1);
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  color: var(--text-muted);
 }
 
-.soroban-img:hover {
-  transform: scale(1.03);
-  box-shadow: 0 10px 20px rgba(0,0,0,0.15);
-}
-/* =========================================
-   Main content grid - improved layout
-========================================= */
-.grid {
-  display: grid;
-  grid-template-columns: 1.7fr 1fr; /* more space for main content */
-  align-items: start;
-  gap: 2rem;
-  margin: 2rem auto;
-  max-width: 1200px;
-}
+/* Responsive Menu */
+@media (max-width: 768px) {
+  .main-nav {
+    display: none;
+    width: 100%;
+    background: var(--card-bg);
+  }
 
-/* Move aside to the right visually */
-.grid > aside {
-  order: 2;
-}
+  .main-nav.active {
+    display: block;
+  }
 
-.grid > main {
-  order: 1;
-}
+  .main-nav ul {
+    flex-direction: column;
+    align-items: center;
+    padding: 1rem 0;
+    gap: 1rem;
+  }
 
-/* Center on smaller screens */
-@media (max-width: 900px) {
-  .grid {
-    grid-template-columns: 1fr;
+  .menu-toggle {
+    display: block;
+  }
+
+  .hero {
     text-align: center;
   }
+}
+/* === Improve answer input & check button in Trainer === */
+#result input[type="number"] {
+  width: 200px;
+  padding: 12px 14px;
+  font-size: 1.2rem;
+  border: 2px solid var(--accent-light, #d9a05b);
+  border-radius: 8px;
+  text-align: center;
+  outline: none;
+  transition: all 0.3s ease-in-out;
+}
 
-  .grid > aside {
-    order: 3;
-    margin-top: 1rem;
+#result input[type="number"]:focus {
+  border-color: var(--accent, #b35c1e);
+  background: #fff8ef;
+}
+
+/* Make the check button larger and consistent */
+#result .btn-start {
+  padding: 12px 20px;
+  font-size: 1.1rem;
+  margin-left: 10px;
+  border-radius: 10px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+#result .btn-start:hover {
+  background: #8c3e14;
+}
+
+/* Center align input + button */
+#result {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 1rem;
+}
+
+/* Responsive tweak for small screens */
+@media (max-width: 600px) {
+  #result input[type="number"] {
+    width: 100%;
+    font-size: 1.1rem;
   }
-
-  .soroban-img {
-    margin: 0 auto;
+  #result .btn-start {
+    width: 100%;
+    font-size: 1.1rem;
   }
-}
-
-/* =========================================
-   Soroban Diagram Image Styling
-========================================= */
-.soroban-img {
-  display: block;
-  max-width: 90%;
-  height: auto;
-  margin: 0 auto;
-  border: 3px solid var(--accent-light);
-  border-radius: var(--radius);
-  background: var(--card-bg);
-  box-shadow: 0 10px 20px rgba(0,0,0,0.2);
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
-
-.soroban-img:hover {
-  transform: scale(1.04);
-  box-shadow: 0 12px 25px rgba(0,0,0,0.25);
-}
-
-/* =========================================
-   Aside panel polish
-========================================= */
-aside {
-  background: var(--card-bg) url("https://www.transparenttextures.com/patterns/asfalt-dark.png");
-  border: 2px solid var(--accent-light);
-  border-radius: var(--radius);
-  padding: 1rem 1.5rem;
-  box-shadow: 0 8px 14px rgba(0,0,0,0.15);
-  
-}
-
-aside h3 {
-  color: var(--accent);
-  margin-top: 0;
-  border-bottom: 2px solid var(--accent-light);
-  padding-bottom: 0.3rem;
-}
-
-aside ul {
-  padding-left: 1.2rem;
-  margin: 0.8rem 0;
-}
-
-aside li {
-  margin-bottom: 0.5rem;
-  color: var(--text-muted);
 }
