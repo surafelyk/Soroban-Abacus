@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Mental Abacus Trainer (Final Version)</title>
+  <style>
+    body {
+      background: linear-gradient(135deg, #0f0f0f, #1a1a1a);
+      color: white;
+      font-family: Arial, sans-serif;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      margin: 0;
+      text-align: center;
+    }
+    #number {
+      font-size: 8rem;
+      font-weight: bold;
+      color: #00ffff;
+      text-shadow: 0 0 20px #00ffff, 0 0 40px #0099ff;
+      margin-bottom: 20px;
+      transition: transform 0.2s;
+    }
+    #controls, #settings, #results {
+      margin-top: 15px;
+    }
+    input, select, button {
+      font-size: 1rem;
+      padding: 8px 12px;
+      margin: 5px;
+      border-radius: 8px;
+      border: none;
+    }
+    button {
+      background: #00bfff;
+      color: white;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+    button:hover {
+      background: #0099cc;
+    }
+    @media (max-width: 600px) {
+      #number {
+        font-size: 4rem;
+      }
+      input, select, button {
+        font-size: 0.9rem;
+        padding: 6px 10px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div id="number">Ready?</div>
+
+  <div id="settings">
+    <label>Speed (seconds per number):</label>
+    <input type="number" id="speed" value="2" step="0.1" min="0.5" max="10"><br>
+
+    <label>Number Type:</label>
+    <select id="digitType">
+      <option value="1">1-Digit Numbers (1–9)</option>
+      <option value="2">2-Digit Numbers (10–99)</option>
+      <option value="3">3-Digit Numbers (100–999)</option>
+      <option value="4">4-Digit Numbers (1,000–9,999)</option>
+      <option value="5">5-Digit Numbers (10,000–99,999)</option>
+      <option value="6">6-Digit Numbers (100,000–999,999)</option>
+    </select><br>
+
+    <label>How Many Numbers:</label>
+    <input type="number" id="howMany" value="10" min="1" max="100"><br>
+
+    <label>Include Negatives:</label>
+    <input type="checkbox" id="includeNegatives"><br>
+
+    <label>Operation:</label>
+    <select id="operation">
+      <option value="addition">Addition</option>
+      <option value="subtraction">Subtraction</option>
+      <option value="multiplication">Multiplication</option>
+      <option value="division">Division</option>
+    </select>
+  </div>
+
+  <div id="controls">
+    <button id="startBtn">Start Practice</button>
+    <button id="pauseBtn" disabled>Pause</button>
+  </div>
+
+  <div id="result"></div>
+
+  <div id="results">
+    Practices Completed: <span id="completed">0</span> |
+    Correct: <span id="correct">0</span>
+  </div>
+
+  <script>
+    const numberDisplay = document.getElementById('number');
+    const startBtn = document.getElementById('startBtn');
+    const pauseBtn = document.getElementById('pauseBtn');
+    const resultDiv = document.getElementById('result');
+    const completedSpan = document.getElementById('completed');
+    const correctSpan = document.getElementById('correct');
+
+    const speedInput = document.getElementById('speed');
+    const digitType = document.getElementById('digitType');
+    const includeNegatives = document.getElementById('includeNegatives');
+    const operationSelect = document.getElementById('operation');
+    const howManyInput = document.getElementById('howMany');
+
+    let numbers = [];
+    let total = 0;
+    let timerId = null;
+    let paused = false;
+    let practiceCount = 0;
+    let correctCount = 0;
+    let numberLimit = 10;
+
+    function getRandomInt(min, max) {
+      return Math.floor(Math.random() * (max - min + 1)) + min;
+    }
+
+    function speakNumber(num) {
+      // Cancel previous speech to prevent overlap
+      speechSynthesis.cancel();
+      const utterance = new SpeechSynthesisUtterance(num.toString());
+      utterance.rate = 1;
+      utterance.pitch = 1;
+      speechSynthesis.speak(utterance);
+    }
+
+    function startPractice() {
+      clearTimeout(timerId);
+      speechSynthesis.cancel();
+      paused = false;
+      numbers = [];
+      total = 0;
+      resultDiv.innerHTML = "";
+      numberDisplay.textContent = "Get ready...";
+      startBtn.textContent = "Restart Practice";
+      pauseBtn.disabled = false;
+
+      numberLimit = parseInt(howManyInput.value, 10);
+
+      setTimeout(showNextNumber, 1500);
+    }
+
+    function showNextNumber() {
+      if (paused) return;
+
+      if (numbers.length >= numberLimit) {
+        numberDisplay.textContent = "Your Answer?";
+        const input = document.createElement("input");
+        input.type = "number";
+        input.placeholder = "Enter total";
+        const btn = document.createElement("button");
+        btn.textContent = "Check";
+        btn.onclick = () => checkAnswer(parseFloat(input.value));
+        resultDiv.innerHTML = "";
+        resultDiv.appendChild(input);
+        resultDiv.appendChild(btn);
+        pauseBtn.disabled = true;
+        return;
+      }
+
+      const digits = parseInt(digitType.value, 10);
+      const min = Math.pow(10, digits - 1);
+      const max = Math.pow(10, digits) - 1;
+      let n = getRandomInt(digits === 1 ? 1 : min, max);
+      if (includeNegatives.checked && Math.random() < 0.5) n *= -1;
+
+      numbers.push(n);
+      total = calculateTotal(numbers, operationSelect.value);
+      numberDisplay.textContent = n;
+      speakNumber(n);
+
+      const speed = parseFloat(speedInput.value) * 1000;
+      timerId = setTimeout(() => {
+        numberDisplay.textContent = "";
+        timerId = setTimeout(showNextNumber, speed * 0.4);
+      }, speed);
+    }
+
+    function calculateTotal(nums, operation) {
+      switch (operation) {
+        case "addition": return nums.reduce((a, b) => a + b, 0);
+        case "subtraction": return nums.reduce((a, b) => a - b);
+        case "multiplication": return nums.reduce((a, b) => a * b);
+        case "division": return nums.reduce((a, b) => a / b);
+        default: return 0;
+      }
+    }
+
+    function checkAnswer(userAnswer) {
+      if (userAnswer === total) {
+        numberDisplay.textContent = "✅ Correct!";
+        correctCount++;
+      } else {
+        numberDisplay.textContent = `❌ Wrong! Correct: ${total}`;
+      }
+      practiceCount++;
+      correctSpan.textContent = correctCount;
+      completedSpan.textContent = practiceCount;
+      resultDiv.innerHTML = "";
+      startBtn.textContent = "Start Practice";
+    }
+
+    function togglePause() {
+      if (!paused) {
+        paused = true;
+        pauseBtn.textContent = "Resume";
+        clearTimeout(timerId);
+        speechSynthesis.cancel();
+      } else {
+        paused = false;
+        pauseBtn.textContent = "Pause";
+        showNextNumber();
+      }
+    }
+
+    startBtn.onclick = startPractice;
+    pauseBtn.onclick = togglePause;
+  </script>
+</body>
+</html>
